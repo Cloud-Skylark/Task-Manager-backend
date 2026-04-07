@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: task-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: devcloudy/task-manager-application:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+        env:
+        - name: DB_URL
+          value: jdbc:postgresql://postgres-service:5432/taskdb
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASS
+          value: password
